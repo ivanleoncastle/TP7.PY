@@ -156,3 +156,254 @@
 # print(sacacorchos.limpiar())  
 # print(sacacorchos.limpiar())  
 # print(botella1)
+
+# 4) Una heladería es un tipo especial de restaurante. Cree una clase Restaurante, cuyo método __init__() guarde dos atributos: 
+# restaurante_nombre y tipo_comida. Cree un método describir_restaurante() que muestre estas piezas de información, y un 
+# método abrir_restaurante() que muestre un mensaje indicando que el restaurante ahora está abierto. Luego cree una clase 
+# Heladeria que herede de Restaurante, y agregue a los existentes un atributo llamado sabores que almacene una lista de los 
+# sabores de helado disponibles. Escriba también un método que muestre estos valores, cree una instancia de la clase y llame 
+# al método. 
+
+
+# class Restaurante:
+#     def __init__(self, restaurante_nombre, tipo_comida):
+        
+#         self.restaurante_nombre = restaurante_nombre
+#         self.tipo_comida = tipo_comida
+
+#     def describir_restaurante(self):
+       
+#         print(f"Restaurante: {self.restaurante_nombre}")
+#         print(f"Tipo de comida: {self.tipo_comida}")
+
+#     def abrir_restaurante(self):
+       
+#         print(f"¡El restaurante {self.restaurante_nombre} ahora está abierto!")
+
+
+# class Heladeria(Restaurante):
+#     def __init__(self, restaurante_nombre, tipo_comida, sabores):
+       
+#         super().__init__(restaurante_nombre, tipo_comida)
+        
+#         self.sabores = sabores
+
+#     def mostrar_sabores(self):
+      
+#         print("Sabores disponibles:")
+#         for sabor in self.sabores:
+#             print(f"- {sabor}")
+
+
+# heladeria = Heladeria("GRIDO", "Helados", ["Chocolate", "Vainilla", "Fresa", "Menta"])
+
+
+# heladeria.describir_restaurante()  
+# heladeria.abrir_restaurante()  
+# heladeria.mostrar_sabores()  
+
+# 5) Escribir una clase Personaje que contenga los atributos vida, posicion y velocidad, y los métodos recibir_ataque, que 
+# reduzca la vida según una cantidad recibida y lance una excepción si la vida pasa a ser menor o igual que cero, y mover 
+# que reciba una dirección y se mueva en esa dirección la cantidad indicada por velocidad. 
+#  Escribir una clase Soldado que herede de Personaje, y agregue el atributo ataque y el método atacar, que reciba otro 
+# personaje, al que le debe hacer el daño indicado por el atributo ataque. 
+#  Escribir una clase Campesino que herede de Personaje, y agregue el atributo cosecha y el método cosechar, que 
+# devuelva la cantidad cosechada
+
+class Personaje:
+    def __init__(self, vida, posicion, velocidad):
+        self.vida = vida
+        self.posicion = posicion
+        self.velocidad = velocidad
+
+    def recibir_ataque(self, cantidad):
+        self.vida -= cantidad
+        if self.vida <= 0:
+            print("El personaje ha muerto.")
+            self.vida = 0  
+    def mover(self, direccion):
+        if direccion == "izquierda":
+            self.posicion -= self.velocidad
+        elif direccion == "derecha":
+            self.posicion += self.velocidad
+        elif direccion == "arriba":
+            self.posicion += self.velocidad
+        elif direccion == "abajo":
+            self.posicion -= self.velocidad
+        else:
+            print("Dirección no válida")
+
+class Soldado:
+    def __init__(self, vida, posicion, velocidad, ataque):
+        self.vida = vida
+        self.posicion = posicion
+        self.velocidad = velocidad
+        self.ataque = ataque
+
+    def recibir_ataque(self, cantidad):
+        self.vida -= cantidad
+        if self.vida <= 0:
+            print("El soldado ha muerto.")
+            self.vida = 0  
+
+    def mover(self, direccion):
+        if direccion == "izquierda":
+            self.posicion -= self.velocidad
+        elif direccion == "derecha":
+            self.posicion += self.velocidad
+        elif direccion == "arriba":
+            self.posicion += self.velocidad
+        elif direccion == "abajo":
+            self.posicion -= self.velocidad
+        else:
+            print("Dirección no válida")
+    
+    def atacar(self, personaje):
+        if hasattr(personaje, 'recibir_ataque'):  
+            print(f"El soldado ataca al personaje y le hace {self.ataque} de daño.")
+            personaje.recibir_ataque(self.ataque)
+        else:
+            print("El objetivo no es un personaje válido.")
+
+class Campesino:
+    def __init__(self, vida, posicion, velocidad, cosecha):
+        self.vida = vida
+        self.posicion = posicion
+        self.velocidad = velocidad
+        self.cosecha = cosecha
+
+    def recibir_ataque(self, cantidad):
+        self.vida -= cantidad
+        if self.vida <= 0:
+            print("El campesino ha muerto.")
+            self.vida = 0  
+
+    def mover(self, direccion):
+        
+        if direccion == "izquierda":
+            self.posicion -= self.velocidad
+        elif direccion == "derecha":
+            self.posicion += self.velocidad
+        elif direccion == "arriba":
+            self.posicion += self.velocidad
+        elif direccion == "abajo":
+            self.posicion -= self.velocidad
+        else:
+            print("Dirección no válida")
+    
+    def cosechar(self):
+        print(f"El campesino ha cosechado {self.cosecha} unidades de cultivo.")
+        return self.cosecha
+
+soldado = Soldado(100, 0, 10, 20)
+campesino = Campesino(80, 5, 5, 30)
+
+print(f"Vida del soldado: {soldado.vida}")
+print(f"Posición del campesino: {campesino.posicion}")
+
+soldado.mover("derecha")
+print(f"Posición del soldado después de moverse: {soldado.posicion}")
+
+soldado.atacar(campesino)
+print(f"Vida del campesino después de ser atacado: {campesino.vida}")
+
+campesino.cosechar()
+
+campesino.recibir_ataque(50)
+print(f"Vida del campesino después del ataque: {campesino.vida}")
+
+soldado.atacar(campesino)
+print(f"Vida del campesino después del segundo ataque: {campesino.vida}")
+
+
+# 6) Usuarios: Cree una clase Usuario. Cree también dos atributos nombre y apellido, así como otros atributos que típicamente 
+# se guardan en un perfil de usuario. Escriba un método describir_usuario() que muestre un resumen de la información del 
+# usuario. Escriba otro método saludar_usuario() que muestre un saludo personalizado al usuario. 
+# Cree varias instancias que representen distintos usuarios y llame ambos métodos para cada uno. 
+
+class Usuario:
+    def __init__(self, nombre, apellido, edad, email, telefono):
+       
+        self.nombre = nombre
+        self.apellido = apellido
+        self.edad = edad
+        self.email = email
+        self.telefono = telefono
+
+    def describir_usuario(self):
+       
+        print(f"Nombre: {self.nombre} {self.apellido}")
+        print(f"Edad: {self.edad} años")
+        print(f"Email: {self.email}")
+        print(f"Teléfono: {self.telefono}")
+
+    def saludar_usuario(self):
+        
+        print(f"¡Hola, {self.nombre}! Bienvenido a tu perfil.")
+        
+
+usuario1 = Usuario("Juan", "Pérez", 30, "juan.perez@example.com", "123-456-7890")
+usuario2 = Usuario("Ana", "Gómez", 25, "ana.gomez@example.com", "987-654-3210")
+usuario3 = Usuario("Carlos", "Martínez", 40, "carlos.martinez@example.com", "555-123-4567")
+
+usuario1.describir_usuario()
+usuario1.saludar_usuario()
+
+print("\n") 
+
+usuario2.describir_usuario()
+usuario2.saludar_usuario()
+
+print("\n")  
+usuario3.describir_usuario()
+usuario3.saludar_usuario()
+
+
+
+
+class Usuario:
+    def __init__(self, nombre, apellido, edad, email, telefono):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.edad = edad
+        self.email = email
+        self.telefono = telefono
+
+    def describir_usuario(self):
+        print(f"Nombre: {self.nombre} {self.apellido}")
+        print(f"Edad: {self.edad} años")
+        print(f"Email: {self.email}")
+        print(f"Teléfono: {self.telefono}")
+
+    def saludar_usuario(self):
+        print(f"¡Hola, {self.nombre}! Bienvenido a tu perfil.")
+
+class Admin:
+    def __init__(self, nombre, apellido, edad, email, telefono, privilegios):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.edad = edad
+        self.email = email
+        self.telefono = telefono
+        self.privilegios = privilegios
+
+    def describir_usuario(self):
+        print(f"Nombre: {self.nombre} {self.apellido}")
+        print(f"Edad: {self.edad} años")
+        print(f"Email: {self.email}")
+        print(f"Teléfono: {self.telefono}")
+
+    def saludar_usuario(self):
+        print(f"¡Hola, {self.nombre}! Bienvenido a tu perfil de administrador.")
+
+    def mostrar_privilegios(self):
+        print(f"Privilegios de {self.nombre}:")
+        for privilegio in self.privilegios:
+            print(f"- {privilegio}")
+
+privilegios_admin = ["puede postear en el foro", "puede borrar un post", "puede banear usuarios", "puede editar el perfil de otros"]
+admin = Admin("Luis", "Fernández", 35, "luis.fernandez@example.com", "333-444-5555", privilegios_admin)
+
+admin.describir_usuario()
+admin.saludar_usuario()
+admin.mostrar_privilegios()            
